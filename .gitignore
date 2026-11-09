@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ML/DLOps: локальные данные и ключи доступа
+data/
+secretkeys*.py
+.ipynb_checkpoints/
+.env
+.env.*
