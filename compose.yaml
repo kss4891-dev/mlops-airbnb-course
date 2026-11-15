@@ -4,8 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile.train
     environment:
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:?Set AWS_ACCESS_KEY_ID in .env}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:?Set AWS_SECRET_ACCESS_KEY in .env}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:?Set AWS_ACCESS_KEY_ID in .env or Codespaces secrets}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:?Set AWS_SECRET_ACCESS_KEY in .env or Codespaces secrets}
       AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-ru-central1}
       S3_BUCKET: ${S3_BUCKET:-mlops26-course-bucket}
       S3_KEY: ${S3_KEY:-prepared/listings.csv}
@@ -13,6 +13,21 @@ services:
       MODEL_PATH: /models/model.pkl
     volumes:
       - model_data:/models
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      MODEL_PATH: /models/model.pkl
+    volumes:
+      - model_data:/models:ro
+    depends_on:
+      train:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
     restart: "no"
 
 volumes:
