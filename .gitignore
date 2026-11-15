@@ -225,3 +225,9 @@ secretkeys*.py
 .ipynb_checkpoints/
 .env
 .env.*
+
+
+# ML/DLOps: модели и результаты экспериментов
+*.pkl
+mlruns/
+!.env.example

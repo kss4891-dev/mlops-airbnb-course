@@ -1,0 +1,19 @@
+services:
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:?Set AWS_ACCESS_KEY_ID in .env}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:?Set AWS_SECRET_ACCESS_KEY in .env}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-ru-central1}
+      S3_BUCKET: ${S3_BUCKET:-mlops26-course-bucket}
+      S3_KEY: ${S3_KEY:-prepared/listings.csv}
+      S3_ENDPOINT_URL: ${S3_ENDPOINT_URL:-https://storage.yandexcloud.net}
+      MODEL_PATH: /models/model.pkl
+    volumes:
+      - model_data:/models
+    restart: "no"
+
+volumes:
+  model_data:
