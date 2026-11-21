@@ -1,0 +1,5 @@
+# Existing training and API dependencies, plus the testing tools.
+-r requirements.txt
+-r requirements-api.txt
+pytest==9.0.2
+httpx==0.28.1
