@@ -58,3 +58,11 @@ def test_predict_allows_missing_optional_numbers(client, listing_payload):
     response = client.post("/predict", json=listing_payload)
     assert response.status_code == 200
     assert math.isfinite(response.json()["predicted_price"])
+
+
+def test_predict_rejects_invalid_latitude(client, listing_payload):
+    listing_payload["latitude"] = "not-a-number"
+
+    response = client.post("/predict", json=listing_payload)
+
+    assert response.status_code == 422
