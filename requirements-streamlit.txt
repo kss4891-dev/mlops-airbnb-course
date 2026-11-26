@@ -1,0 +1,5 @@
+# Separate lightweight dependencies for the Streamlit dashboard (no ML training).
+streamlit>=1.39,<2
+pandas>=2.2,<3
+numpy>=2,<3
+plotly>=5.20,<7
